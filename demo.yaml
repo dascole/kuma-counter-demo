@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: kuma-demo
+  name: kuma-demo-v2
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis
-  namespace: kuma-demo
+  namespace: kuma-demo-v2
 spec:
   selector:
     matchLabels:
@@ -33,7 +33,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis
-  namespace: kuma-demo
+  namespace: kuma-demo-v2
 spec:
   selector:
     app: redis
@@ -45,7 +45,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-app
-  namespace: kuma-demo
+  namespace: kuma-demo-v2
 spec:
   selector:
     matchLabels:
@@ -61,7 +61,7 @@ spec:
           image: "thefosk/kuma-demo"
           env:
             - name: REDIS_HOST
-              value: "redis.kuma-demo.svc.cluster.local"
+              value: "redis.kuma-demo-v2.svc.cluster.local"
             - name: REDIS_PORT
               value: "6379"
             - name: APP_VERSION
@@ -76,7 +76,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: demo-app
-  namespace: kuma-demo
+  namespace: kuma-demo-v2
   annotations:
     5000.service.kuma.io/protocol: http
     ingress.kubernetes.io/service-upstream: "true"
